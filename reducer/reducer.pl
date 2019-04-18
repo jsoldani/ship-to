@@ -1,5 +1,7 @@
 :- use_module(library(lists)).
-:- consult('data/examples/thinking').
+:- consult('data/examples/thinking-lite').
+%:- consult('test_big').
+%:- consult('test_JS').
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 loop(Result) :-
@@ -10,14 +12,14 @@ loop(Result) :-
 
 wellFormedTopology(Edges) :-
     findall(X, ( member(edge(h,X,X),Edges); path(v,X,X,Edges) ), []),  %def 3.(i)
-    findall(X, ( member(edge(v,X,Y),Edges), member(edge(v,X,Z),Edges), Y\==Z ), []). %def 3.(ii) 
-    
-loop([node(_,_,Nc)],[],Nc). 
-loop([Node1,Node2|Nodes],Edges,Result) :-  
-    collapse([Node1,Node2|Nodes], Edges, NewNodes,NewEdges),  
+    findall(X, ( member(edge(v,X,Y),Edges), member(edge(v,X,Z),Edges), Y\==Z ), []). %def 3.(ii)
+
+loop([node(_,_,Nc)],[],Nc).
+loop([Node1,Node2|Nodes],Edges,Result) :-
+    collapse([Node1,Node2|Nodes], Edges, NewNodes,NewEdges),
     loop(NewNodes,NewEdges,Result).
 
-collapse(Nodes,Edges,NewNodes,NewEdges) :- 
+collapse(Nodes,Edges,NewNodes,NewEdges) :-
     reducible(U,V,D,Z,Edges),
     collapseNodes(U,V,D,Z,N,Nodes,NewNodes),
     collapseEdges(U,V,N,Edges,NewEdges).
@@ -25,7 +27,7 @@ collapse(Nodes,Edges,NewNodes,NewEdges) :-
 reducible(U,V,v,_,Edges) :-
     member(edge(v,U,V),Edges),
     \+ member(edge(v,_,U),Edges),
-    findall(X, (path(v,X,V,Edges),(path(h,U,X,Edges);path(h,X,U,Edges))), []). 
+    findall(X, (path(v,X,V,Edges),(path(h,U,X,Edges);path(h,X,U,Edges))), []).
 
 reducible(U,V,h,Z,Edges) :-
     member(edge(h,U,V),Edges),
@@ -33,7 +35,7 @@ reducible(U,V,h,Z,Edges) :-
     \+ member(edge(v,_,V),Edges),
     member(edge(v,U,Z),Edges),
     member(edge(v,V,Z),Edges).
-    
+
 path(D,X,Y,Edges) :-
     path(D,X,Y,[],Edges).
 path(D,X,Y,_,Edges) :-
@@ -45,8 +47,8 @@ path(D,X,Y,Visited,Edges) :-
 
 collapseNodes(U,V,D,Z,N,Nodes,[NewNode|NewNodes]) :-
     deleteNodes([node(U,_,Uc),node(V,Vt,Vc)],Nodes,NewNodes),
-    N = m(U,V,D),                                       
-    ( (D==v, NewNode = node(N,Vt,l(Vt,v,Uc,Vc))) ; (D==h, member(node(Z,Zt,_),NewNodes), NewNode = node(N,Vt,l(Zt,h,Uc,Vc))) ). 
+    N = m(U,V,D),
+    ( (D==v, NewNode = node(N,Vt,l(Vt,v,Uc,Vc))) ; (D==h, member(node(Z,Zt,_),NewNodes), NewNode = node(N,Vt,l(Zt,h,Uc,Vc))) ).
 
 deleteNodes([X,Y],[X|L],NewNodes) :-
     deleteNode(Y,L,NewNodes).
@@ -60,7 +62,7 @@ deleteNode(X,[Y|L],[Y|NewNodes]) :-
 
 collapseEdges(U,V,N,Edges,NewEdges) :-
     collapseEdges2(U,V,N,Edges,NewEdgesWithDoubles),
-    ((NewEdgesWithDoubles==[],NewEdges=[]) ; (setof(edge(DD,X,Y),member(edge(DD,X,Y),NewEdgesWithDoubles),NewEdges))). 
+    ((NewEdgesWithDoubles==[],NewEdges=[]) ; (setof(edge(DD,X,Y),member(edge(DD,X,Y),NewEdgesWithDoubles),NewEdges))).
 
 collapseEdges2(_,_,_,[],[]).
 collapseEdges2(U,V,N,[edge(_,X,Y)|Edges],NewEdges) :-
