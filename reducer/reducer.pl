@@ -1,7 +1,5 @@
 :- use_module(library(lists)).
 :- consult('data/examples/thinking-lite').
-%:- consult('test_big').
-%:- consult('test_JS').
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 loop(Result) :-
