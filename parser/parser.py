@@ -74,19 +74,19 @@ if len(bottomNodes) > 1:
         vRels.append(relToBottom)
 
 # output nodes and relationship on file
-outputFile = open("topology.pl","w")
+output = open("topology.pl","w")
 
 for node in nodes:
-    writeNodeOnFile(outputFile,node)
+    writeNodeOnFile(output,node)
 
-outputFile.write("\n")
+output.write("\n")
 
 for hRel in hRels:
-    writeRelationshipOnFile(outputFile,hRel,"h")
+    writeRelationshipOnFile(output,hRel,"h")
 
-outputFile.write("\n")
+output.write("\n")
 
 for vRel in vRels:
-    writeRelationshipOnFile(outputFile,vRel,"v")
+    writeRelationshipOnFile(output,vRel,"v")
 
-outputFile.close()
+output.close()
