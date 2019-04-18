@@ -23,7 +23,13 @@ for n in app.nodetemplates:
     node = []
     nodeName = n.name
     node.append(nodeName)
-    nodeType = n.type.replace(".","-")
+    nodeTypeTokens = n.type.split(".")
+    nodeType = nodeTypeTokens[0]
+    for i in range(1,len(nodeTypeTokens)):
+        token = nodeTypeTokens[i]
+        upperToken = "" + token[0].upper()
+        upperToken = upperToken + token[1:]
+        nodeType = nodeType + upperToken
     node.append(nodeType)
     nodes.append(node)
 
