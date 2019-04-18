@@ -21,8 +21,15 @@ vRels = []
 for n in app.nodetemplates:
     # get current node - represented as [name, type]
     node = []
-    node.append(n.name)
-    node.append(n.type)
+    nodeName = n.name
+    node.append(nodeName)
+    nodeTypeTokens = n.type.split(".")
+    nodeType = ""
+    for token in nodeTypeTokens:
+        upperToken = "" + token[0].upper()
+        upperToken = upperToken + token[1:]
+        nodeType = nodeType + upperToken
+    node.append(nodeType)
     nodes.append(node)
 
     for requirementMap in n.requirements:
@@ -42,6 +49,28 @@ for n in app.nodetemplates:
                 vRels.append(relationship)
             else:
                 hRels.append(relationship)
+
+# adds bottom node (if needed)
+bottomNodes = []
+
+for node in nodes:
+    nodeName = node[0]
+    isBottom = True
+    for vRel in vRels:
+        source = vRel[0]
+        if source == nodeName:
+            isBottom = False
+    if isBottom:
+        bottomNodes.append(node)
+
+if len(bottomNodes) > 1:
+    bottom = ["bottom","bottom"]
+    nodes.append(bottom)
+    for node in bottomNodes:
+        relToBottom = []
+        relToBottom.append(node[0])
+        relToBottom.append("bottom")
+        vRels.append(relToBottom)
 
 # output nodes and relationship on file
 outputFile = open("topology.pl","w")
