@@ -1,16 +1,19 @@
 import sys, getopt
 from toscaparser.tosca_template import ToscaTemplate
 
+# function to typeset "node(name,type,cost)" and output it on a given file
 def writeNodeOnFile(file, node):
     nodeName = node[0]
     nodeType = node[1]
     file.write("node(" + nodeName + "," + nodeType + ",c_" + nodeName + ").\n")
 
+# function to typeset "edge(direction,source,target)" and output it on a given file
 def writeRelationshipOnFile(file,relationship,direction):
     source = relationship[0]
     target = relationship[1]
     file.write("edge(" + direction + "," + source + "," + target + ").\n")
 
+# function to parse a tosca "inputFile" and output its representation in prolog
 def parse(inputFile,outputFile):
     # parse TOSCA file
     app = ToscaTemplate(inputFile,None,True)
@@ -92,7 +95,7 @@ def parse(inputFile,outputFile):
 
     output.close()
 
-######## MAIN ########
+# main function
 def main(args):
     if len(args) < 2:
         print("usage: parser.py <inputFile> <outputFile>")
@@ -102,4 +105,5 @@ def main(args):
     outputFile = args[1]
     parse(inputFile,outputFile)
 
+# run main function
 main(sys.argv[1:])
