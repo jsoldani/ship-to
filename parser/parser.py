@@ -1,4 +1,4 @@
-import sys, getopt
+import sys
 from toscaparser.tosca_template import ToscaTemplate
 
 # function to typeset "node(name,type,cost)" and output it on a given file
