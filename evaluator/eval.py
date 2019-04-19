@@ -80,5 +80,9 @@ def main(args):
 
     printTerm(term,0) # debugging
 
+    # TODO - input python description of costs and compositors
+    # (see https://stackoverflow.com/questions/26062994/how-can-i-import-a-python-file-through-a-command-prompt)
+    # TODO - evaluate parsed term to get output value
+
 # run main function
 main(sys.argv[1:])
