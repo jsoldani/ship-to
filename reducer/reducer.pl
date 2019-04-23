@@ -1,5 +1,5 @@
 :- use_module(library(lists)).
-:- consult('topology.pl').
+:- consult('config/topology.pl').
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 loop(Result) :-
