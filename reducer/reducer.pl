@@ -1,5 +1,5 @@
 :- use_module(library(lists)).
-:- consult('data/examples/thinking-lite').
+:- consult('topology.pl').
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 loop(Result) :-

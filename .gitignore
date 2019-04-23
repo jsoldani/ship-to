@@ -2,3 +2,4 @@
 */output/*
 evaluator/config/*
 parser/*.pl
+reducer/topology.pl
