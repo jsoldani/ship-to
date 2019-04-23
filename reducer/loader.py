@@ -1,4 +1,5 @@
 from shutil import copyfile
+import errno
 import os
 import sys
 
