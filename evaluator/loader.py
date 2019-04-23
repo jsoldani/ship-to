@@ -7,6 +7,7 @@ def main(args):
     # check command line arguments
     if(len(args) < 2):
         print("usage: loader.py <compositorsFile.py> <costsFile.py>")
+        exit(2)
 
     # copy files to set environment for "evaluator.py"
     try:
