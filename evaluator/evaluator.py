@@ -101,8 +101,12 @@ def main(args):
     outputFile = args[1]
 
     # evaluate term
-    totalCost = eval(inputFile)
-
+    try:
+        totalCost = eval(inputFile)
+    except TypeError as e:
+        print("ERROR: inconsistent problem!")
+        exit(2)
+        
     # create "output" folder (if not existing yet)
     try:
         os.mkdir("output")

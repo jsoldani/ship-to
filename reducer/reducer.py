@@ -8,9 +8,15 @@ def reduce(outputFile):
     # load Prolog program "reducer"
     prolog = Prolog()
     prolog.consult("prolog/reducer.pl")
-    # compute all possible, equivalent reductions (and save first)
+    # compute all possible, equivalent reductions
     results = list(prolog.query("loop(R)"))
-    result = results[0]["R"]
+    if len(results) > 0:
+        # if solvable, save first result
+        result = results[0]["R"]
+    else:
+        # otherwise, return error message for non well-formed topology
+        print("ERROR: topology is not well-formed")
+        exit(2)
 
     # create "output" folder (if not existing yet)
     try:
