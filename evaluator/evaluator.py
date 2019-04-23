@@ -13,7 +13,9 @@ def parseTerm(termTxt):
     termDict = {}
 
     # remove outer parentheses
-    parametersTxt = termTxt[1:-1]
+    afterOuterOpenedParenthesis = termTxt.find("(") + 1
+    beforeOuterClosedParenthesis = termTxt.rfind(")")
+    parametersTxt = termTxt[afterOuterOpenedParenthesis:beforeOuterClosedParenthesis]
 
     # get node type
     firstComma = parametersTxt.find(",")
