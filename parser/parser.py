@@ -1,3 +1,5 @@
+import errno
+import os
 import sys
 from toscaparser.tosca_template import ToscaTemplate
 
@@ -77,8 +79,16 @@ def parse(inputFile,outputFile):
             relToBottom.append("bottom")
             vRels.append(relToBottom)
 
+    # create "output" folder (if not existing yet)
+    try:
+        os.mkdir("output")
+    except Exception as e:
+        if e.errno != errno.EEXIST:
+            print(e)
+
     # output nodes and relationship on file
-    output = open(outputFile,"w")
+    outputFileWithFolder = "output/" + outputFile
+    output = open(outputFileWithFolder,"w")
 
     for node in nodes:
         writeNodeOnFile(output,node)
