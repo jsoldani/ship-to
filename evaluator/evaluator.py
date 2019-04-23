@@ -5,7 +5,7 @@ from config.compositors import compositor
 # function reading and returning the term in inputFile
 def getTerm(inputFile):
     file = open(inputFile,"r")
-    term = file.readline().replace(" ","").replace("l","")
+    term = file.readline().replace(" ","").replace("l(","(")
     return term
 
 # function for parsing terms "l(nodeType,direction,subTerm1,subTerm2)"
@@ -70,6 +70,17 @@ def printTerm(term,nesting):
     else:
         print("\t"*nesting, term)
 
+# function evaluating a parsed term (dictionary, see 'parseTerm')
+def evalTerm(term):
+    if isinstance(term,str):
+        node = term[2:]
+        return cost(node)
+    else:
+        comp = compositor(term["type"],term["dir"])
+        costTerm1 = evalTerm(term["term1"])
+        costTerm2 = evalTerm(term["term2"])
+        return comp(costTerm1,costTerm2)
+
 # main function
 def main(args):
     # parse command line arguments
@@ -82,11 +93,14 @@ def main(args):
     termTxt = getTerm(inputFile)
     term = parseTerm(termTxt)
 
-    printTerm(term,0) # debugging
+    # debugging
+    #print("*********************************")
+    #printTerm(term,0)
+    #print("*********************************")
 
-    # TODO - evaluate parsed term to get output value
-    comp = compositor("n1","v")
-    print(comp(cost("n1"),cost("n2")))
+    # evaluate parsed term to get output value
+    totalCost = evalTerm(term)
+    print(totalCost)
 
 # run main function
 main(sys.argv[1:])
