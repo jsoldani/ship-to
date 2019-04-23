@@ -18,7 +18,7 @@ Both above packages can be easily installed by typing `sudo pip install <package
 
 ### Defining a cost estimation problem 
 
-TBD
+TBD - mention templates (data/templates)
 
 ### Running EvalTo
 EvalTo is designed to run on `bash` shells. To run a cost estimation problem (defined as illustrated above), just type the following command
