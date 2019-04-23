@@ -17,7 +17,7 @@ def main(args):
     topologyPl = os.getcwd() + "/output/topology.pl"
     print("done!")
 
-    # reducing topology
+    # reduce topology
     print("Reducing topology to evaluable term...", end="")
     os.chdir("../reducer")
     os.system("python loader.py " + topologyPl)
@@ -25,11 +25,17 @@ def main(args):
     termTxt = os.getcwd() + "/output/term.txt"
     print("done!")
 
-    # evaluating topology
+    # evaluate topology
     print("Evaluating topology...", end="")
     os.chdir("../evaluator")
     os.system("python loader.py " + compositorsFile + " " + costsFile)
-    os.system("python evaluator.py " + termTxt)
+    os.system("python evaluator.py " + termTxt + " result.txt")
+    resultTxt = os.getcwd() + "/output/result.txt"
     print("done!")
+
+    # print result
+    resultFile = open(resultTxt)
+    print(resultFile.read())
+    resultFile.close()
 
 main(sys.argv[1:])

@@ -1,3 +1,5 @@
+import errno
+import os
 import sys
 from config.costs import cost
 from config.compositors import compositor
@@ -92,13 +94,26 @@ def eval(inputFile):
 # main function
 def main(args):
     # parse command line arguments
-    if len(args) < 1:
-        print("usage: parser.py <inputFile>")
+    if len(args) < 2:
+        print("usage: parser.py <inputFile> <outputFile>")
         sys.exit(2)
     inputFile = args[0]
+    outputFile = args[1]
 
+    # evaluate term
     totalCost = eval(inputFile)
-    print(totalCost)
+
+    # create "output" folder (if not existing yet)
+    try:
+        os.mkdir("output")
+    except Exception as e:
+        if e.errno != errno.EEXIST:
+            print(e)
+
+    # output term on "outputFile"
+    outputFileWithFolder = "output/" + outputFile
+    output = open(outputFileWithFolder,"w")
+    output.write(str(totalCost))
 
 # run main function
 main(sys.argv[1:])
