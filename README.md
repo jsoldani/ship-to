@@ -11,8 +11,9 @@ EvalTo is designed to run on `bash` shells.
 ### Prerequisites
 To effectively be executed on a `bash` shell, EvalTo requires such shell to support the following commands:
 * `python`,
-* `pip`, 
-* `prolog` (to be checked!!!),
+* `pip`,
+* `swipl` available on command line,
+* `pyswip` (which can be installed by typing `sudo pip install 'pyswip'`)
 * `tosca-parser` (which can be installed by typing `sudo pip install 'tosca-parser'`)
 
 ### Running EvalTo
