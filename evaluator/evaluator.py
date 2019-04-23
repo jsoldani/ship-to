@@ -81,6 +81,14 @@ def evalTerm(term):
         costTerm2 = evalTerm(term["term2"])
         return comp(costTerm1,costTerm2)
 
+def eval(inputFile):
+    # get term to be evaluated
+    termTxt = getTerm(inputFile)
+    term = parseTerm(termTxt)
+    # evaluate parsed term to get output value
+    totalCost = evalTerm(term)
+    return totalCost
+
 # main function
 def main(args):
     # parse command line arguments
@@ -89,17 +97,7 @@ def main(args):
         sys.exit(2)
     inputFile = args[0]
 
-    # get term to be evaluated
-    termTxt = getTerm(inputFile)
-    term = parseTerm(termTxt)
-
-    # debugging
-    #print("*********************************")
-    #printTerm(term,0)
-    #print("*********************************")
-
-    # evaluate parsed term to get output value
-    totalCost = evalTerm(term)
+    totalCost = eval(inputFile)
     print(totalCost)
 
 # run main function
