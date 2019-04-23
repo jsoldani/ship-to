@@ -1,24 +1,14 @@
 def sum(a,b):
     return a+b
 
-def max(a,b):
-    if(a>b):
-        return a
-    return b
-
-compN1 = {
+bothSumming = {
     "h": sum,
     "v": sum
 }
 
-compN2 = {
-    "h": max,
-    "v": sum
-}
-
 compositors = {
-    "n1" : compN1,
-    "n2" : compN2
+    "bottom": bothSumming,
+    "toskerNodesContainer": bothSumming
 }
 
 def compositor(node,direction):
