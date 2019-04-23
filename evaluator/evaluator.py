@@ -1,4 +1,6 @@
 import sys
+from config.costs import cost
+from config.compositors import compositor
 
 # function reading and returning the term in inputFile
 def getTerm(inputFile):
@@ -80,9 +82,9 @@ def main(args):
 
     printTerm(term,0) # debugging
 
-    # TODO - input python description of costs and compositors
-    # (see https://stackoverflow.com/questions/26062994/how-can-i-import-a-python-file-through-a-command-prompt)
     # TODO - evaluate parsed term to get output value
+    comp = compositor("n1","v")
+    print(comp(cost("n1"),cost("n2")))
 
 # run main function
 main(sys.argv[1:])
