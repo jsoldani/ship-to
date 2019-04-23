@@ -4,7 +4,7 @@ import os
 import sys
 
 # function for loading files needed by "evaluator.py" in "config" folder
-def loadEvaluatorConfig(compositorsPy,costsPy):
+def loadEvaluatorConfig(compositorsPy,costsPy,evaluatorPath):
     # create "config" folder (if not existing yet)
     try:
         os.mkdir("config")
@@ -13,8 +13,8 @@ def loadEvaluatorConfig(compositorsPy,costsPy):
             print(e)
 
     # load files in "config" folder
-    targetCompositors = "config/compositors.py"
-    targetCosts = "config/costs.py"
+    targetCompositors = evaluatorPath + "/config/compositors.py"
+    targetCosts = evaluatorPath + "/config/costs.py"
     copyfile(compositorsPy,targetCompositors)
     copyfile(costsPy,targetCosts)
 
@@ -25,6 +25,6 @@ def main(args):
         exit(2)
 
     # load files
-    loadEvaluatorConfig(args[0],args[1])
+    loadEvaluatorConfig(args[0],args[1],".")
 
 main(sys.argv[1:])
