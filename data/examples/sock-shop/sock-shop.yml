@@ -147,6 +147,10 @@ topology_template:
       requirements:
         - host: orders-container
         - connection: orders-db
+        - connection: users
+        - connection: carts
+        - connection: payment
+        - connection: shipping
     orders-db:
       type: toskerlite.nodes.Container
       requirements:
