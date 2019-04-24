@@ -1,0 +1,11 @@
+tosca_definitions_version: tosca_simple_yaml_1_0
+
+description: >
+  TOSCA specification of the Thinking application (https://microservices-demo.github.io).
+
+node_types:
+  # see "thinking-running-example"
+
+topology_template:
+  node_templates:
+    # see "thinking-running-example"
