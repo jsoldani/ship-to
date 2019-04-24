@@ -4,8 +4,220 @@ description: >
   TOSCA specification of the Thinking application (https://microservices-demo.github.io).
 
 node_types:
-  # see "thinking-running-example"
+  toskerlite.nodes.Root:
+    derived_from: tosca.nodes.Root
+
+  toskerlite.nodes.VM:
+    derived_from: toskerlite.nodes.Root
+    capabilities:
+      host:
+        type: tosca.capabilities.Container
+        valid_source_types: [toskerlite.nodes.Root]
+        occurrences: [0, UNBOUNDED]
+
+  toskerlite.nodes.Container:
+    derived_from: toskerlite.nodes.Root
+    requirements:
+    - host:
+        capability: tosca.capabilities.Container
+        occurrences: [0, UNBOUNDED]
+        node: toskerlite.nodes.VM
+        relationship: tosca.relationships.HostedOn
+    - storage:
+        capability: tosca.capabilities.Attachment
+        occurrences: [0, UNBOUNDED]
+        node: toskerlite.nodes.Volume
+        relationship: tosca.relationships.AttachesTo
+    - connection:
+        capability: tosca.capabilities.Endpoint
+        occurrences: [0, UNBOUNDED]
+        node: toskerlite.nodes.Root
+        relationship: tosca.relationships.ConnectsTo
+    - dependency:
+        capability: tosca.capabilities.Node
+        occurrences: [0, UNBOUNDED]
+        node: toskerlite.nodes.Root
+        relationship: tosca.relationships.DependsOn
+    capabilities:
+      host:
+        type: tosca.capabilities.Container
+        valid_source_types: [toskerlite.nodes.Software]
+        occurrences: [0, UNBOUNDED]
+      endpoint:
+        type: tosca.capabilities.Endpoint
+        valid_source_types: [toskerlite.nodes.Software, toskerlite.nodes.Container]
+        occurrences: [0, UNBOUNDED]
+      feature:
+        type: tosca.capabilities.Node
+        valid_source_types: [toskerlite.nodes.Software, toskerlite.nodes.Container]
+        occurrences: [0, UNBOUNDED]
+
+  toskerlite.nodes.Volume:
+    derived_from: evalto.nodes.Root
+    capabilities:
+      attachment:
+        type: tosca.capabilities.Attachment
+        valid_source_types: [evalto.nodes.Container]
+        occurrences: [0, UNBOUNDED]
+    requirements:
+      - host:
+          capability: tosca.capabilities.Container
+          occurrences: 1
+          node: evalto.nodes.Container
+          relationship: tosca.relationships.HostedOn
+
+  toskerlite.nodes.Software:
+    derived_from: toskerlite.nodes.Root
+    requirements:
+    - connection:
+        capability: tosca.capabilities.Endpoint
+        occurrences: [0, UNBOUNDED]
+        node: toskerlite.nodes.Root
+        relationship: tosca.relationships.ConnectsTo
+    - dependency:
+        capability: tosca.capabilities.Node
+        occurrences: [0, UNBOUNDED]
+        node: toskerlite.nodes.Root
+        relationship: tosca.relationships.DependsOn
+    - host:
+        capability: tosca.capabilities.Container
+        occurrences: 1
+        node: toskerlite.nodes.Container
+        relationship: tosca.relationships.HostedOn
+    capabilities:
+      endpoint:
+        type: tosca.capabilities.Endpoint
+        valid_source_types: [toskerlite.nodes.Software, toskerlite.nodes.Container]
+        occurrences: [0, UNBOUNDED]
+      feature:
+        type: tosca.capabilities.Node
+        valid_source_types: [toskerlite.nodes.Software, toskerlite.nodes.Container]
+        occurrences: [0, UNBOUNDED]
+      host:
+        type: tosca.capabilities.Container
+        valid_source_types: [toskerlite.nodes.Software]
+        occurrences: [0, UNBOUNDED]
+
 
 topology_template:
   node_templates:
-    # see "thinking-running-example"
+    # frontend
+    edge-router:
+      type: toskerlite.nodes.Container
+      requirements:
+        - host: frontend-vm
+        - connection: frontend
+    frontend:
+      type: toskerlite.nodes.Software
+      requirements:
+        - host: frontend-container
+        - connection: catalogue
+        - connection: orders
+        - connection: users
+        - connection: carts
+        - connection: payment
+        - connection: shipping
+    frontend-container:
+      type: toskerlite.nodes.Container
+      requirements:
+        - host: frontend-vm
+    frontend-vm:
+      type: toskerlite.nodes.VM
+
+    # catalogue
+    catalogue:
+      type: toskerlite.nodes.Software
+      requirements:
+        - host: catalogue-container
+        - connection: catalogue-db
+    catalogue-db:
+      type: toskerlite.nodes.Container
+      requirements:
+        - host: catalogue-vm
+    catalogue-container:
+      type: toskerlite.nodes.Container
+      requirements:
+        - host: catalogue-vm
+    catalogue-vm:
+      type: toskerlite.nodes.VM
+
+    # orders
+    orders:
+      type: toskerlite.nodes.Software
+      requirements:
+        - host: orders-container
+        - connection: orders-db
+    orders-db:
+      type: toskerlite.nodes.Container
+      requirements:
+        - host: orders-vm
+    orders-container:
+      type: toskerlite.nodes.Container
+      requirements:
+        - host: orders-vm
+    orders-vm:
+      type: toskerlite.nodes.VM
+
+    # users
+    users:
+      type: toskerlite.nodes.Software
+      requirements:
+        - host: users-container
+        - connection: users-db
+    users-db:
+      type: toskerlite.nodes.Container
+      requirements:
+        - host: users-vm
+    users-container:
+      type: toskerlite.nodes.Container
+      requirements:
+        - host: users-vm
+    users-vm:
+      type: toskerlite.nodes.VM
+
+    # carts
+    carts:
+      type: toskerlite.nodes.Software
+      requirements:
+        - host: carts-container
+        - connection: carts-db
+    carts-db:
+      type: toskerlite.nodes.Container
+      requirements:
+        - host: carts-vm
+    carts-container:
+      type: toskerlite.nodes.Container
+      requirements:
+        - host: carts-vm
+    carts-vm:
+      type: toskerlite.nodes.VM
+
+    # payment
+    payment:
+      type: toskerlite.nodes.Container
+      requirements:
+        - host: payment-vm
+    payment-vm:
+      type: toskerlite.nodes.VM
+
+    # shipping
+    shipping:
+      type: toskerlite.nodes.Software
+      requirements:
+        - host: shipping-container
+        - connection: rabbitmq
+    shipping-container:
+      type: toskerlite.nodes.Container
+      requirements:
+        - host: shipping-vm
+    rabbitmq:
+      type: toskerlite.nodes.Container
+      requirements:
+        - host: shipping-vm
+    queue-master:
+      type: toskerlite.nodes.Container
+      requirements:
+        - host: shipping-vm
+        - connection: rabbitmq
+    shipping-vm:
+      type: toskerlite.nodes.VM
