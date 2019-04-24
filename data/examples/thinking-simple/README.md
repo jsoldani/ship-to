@@ -1,4 +1,4 @@
-## thinking-simple example
+## Storage requirements for Thinking
 
 Cost estimation problem for evaluating the total storage (in MBs) required by a deployment of the Thinking application.
 * `thinking.yml` specifies the application deployment in TOSCA

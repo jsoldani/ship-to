@@ -1,4 +1,4 @@
-## thinking-simple example
+## Hourly costs for Thinking
 
 Cost estimation problem for evaluating the minimum and maximum hourly cost (in dollars/hour) that would be paid with the planned  deployment of the Thinking application.
 * `thinking.yml` specifies the application deployment in TOSCA,
