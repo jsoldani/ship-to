@@ -4,154 +4,154 @@ description: >
   TOSCA specification of the Thinking application (https://github.com/di-unipi-socc/thinking).
 
 node_types:
-  evalto.nodes.Root:
+  toskerlite.nodes.Root:
     derived_from: tosca.nodes.Root
 
-  evalto.nodes.VM:
-    derived_from: evalto.nodes.Root
+  toskerlite.nodes.VM:
+    derived_from: toskerlite.nodes.Root
     capabilities:
       host:
         type: tosca.capabilities.Container
-        valid_source_types: [evalto.nodes.Root]
+        valid_source_types: [toskerlite.nodes.Root]
         occurrences: [0, UNBOUNDED]
 
-  evalto.nodes.Container:
-    derived_from: evalto.nodes.Root
+  toskerlite.nodes.Container:
+    derived_from: toskerlite.nodes.Root
     requirements:
     - host:
         capability: tosca.capabilities.Container
         occurrences: [0, UNBOUNDED]
-        node: evalto.nodes.VM
+        node: toskerlite.nodes.VM
         relationship: tosca.relationships.HostedOn
     - storage:
         capability: tosca.capabilities.Attachment
         occurrences: [0, UNBOUNDED]
-        node: evalto.nodes.Volume
+        node: toskerlite.nodes.Volume
         relationship: tosca.relationships.AttachesTo
     - connection:
         capability: tosca.capabilities.Endpoint
         occurrences: [0, UNBOUNDED]
-        node: evalto.nodes.Root
+        node: toskerlite.nodes.Root
         relationship: tosca.relationships.ConnectsTo
     - dependency:
         capability: tosca.capabilities.Node
         occurrences: [0, UNBOUNDED]
-        node: evalto.nodes.Root
+        node: toskerlite.nodes.Root
         relationship: tosca.relationships.DependsOn
     capabilities:
       host:
         type: tosca.capabilities.Container
-        valid_source_types: [evalto.nodes.Software]
+        valid_source_types: [toskerlite.nodes.Software]
         occurrences: [0, UNBOUNDED]
       endpoint:
         type: tosca.capabilities.Endpoint
-        valid_source_types: [evalto.nodes.Software, evalto.nodes.Container]
+        valid_source_types: [toskerlite.nodes.Software, toskerlite.nodes.Container]
         occurrences: [0, UNBOUNDED]
       feature:
         type: tosca.capabilities.Node
-        valid_source_types: [evalto.nodes.Software, evalto.nodes.Container]
+        valid_source_types: [toskerlite.nodes.Software, toskerlite.nodes.Container]
         occurrences: [0, UNBOUNDED]
 
-  evalto.nodes.Volume:
-    derived_from: evalto.nodes.Root
+  toskerlite.nodes.Volume:
+    derived_from: toskerlite.nodes.Root
     capabilities:
       attachment:
         type: tosca.capabilities.Attachment
-        valid_source_types: [evalto.nodes.Container]
+        valid_source_types: [toskerlite.nodes.Container]
         occurrences: [0, UNBOUNDED]
     requirements:
       - host:
           capability: tosca.capabilities.Container
           occurrences: 1
-          node: evalto.nodes.Container
+          node: toskerlite.nodes.Container
           relationship: tosca.relationships.HostedOn
 
-  evalto.nodes.Software:
-    derived_from: evalto.nodes.Root
+  toskerlite.nodes.Software:
+    derived_from: toskerlite.nodes.Root
     requirements:
     - connection:
         capability: tosca.capabilities.Endpoint
         occurrences: [0, UNBOUNDED]
-        node: evalto.nodes.Root
+        node: toskerlite.nodes.Root
         relationship: tosca.relationships.ConnectsTo
     - dependency:
         capability: tosca.capabilities.Node
         occurrences: [0, UNBOUNDED]
-        node: evalto.nodes.Root
+        node: toskerlite.nodes.Root
         relationship: tosca.relationships.DependsOn
     - host:
         capability: tosca.capabilities.Container
         occurrences: 1
-        node: evalto.nodes.Container
+        node: toskerlite.nodes.Container
         relationship: tosca.relationships.HostedOn
     capabilities:
       endpoint:
         type: tosca.capabilities.Endpoint
-        valid_source_types: [evalto.nodes.Software, evalto.nodes.Container]
+        valid_source_types: [toskerlite.nodes.Software, toskerlite.nodes.Container]
         occurrences: [0, UNBOUNDED]
       feature:
         type: tosca.capabilities.Node
-        valid_source_types: [evalto.nodes.Software, evalto.nodes.Container]
+        valid_source_types: [toskerlite.nodes.Software, toskerlite.nodes.Container]
         occurrences: [0, UNBOUNDED]
       host:
         type: tosca.capabilities.Container
-        valid_source_types: [evalto.nodes.Software]
+        valid_source_types: [toskerlite.nodes.Software]
         occurrences: [0, UNBOUNDED]
 
-  evalto.nodes.Module:
-    derived_from: evalto.nodes.Software
+  toskerlite.nodes.Module:
+    derived_from: toskerlite.nodes.Software
 
-  evalto.nodes.Php_app:
-    derived_from: evalto.nodes.Software
+  toskerlite.nodes.Php_app:
+    derived_from: toskerlite.nodes.Software
 
-  evalto.nodes.Java_app:
-    derived_from: evalto.nodes.Software
+  toskerlite.nodes.Java_app:
+    derived_from: toskerlite.nodes.Software
 
-  evalto.nodes.No_sql_db:
-    derived_from: evalto.nodes.Software
+  toskerlite.nodes.No_sql_db:
+    derived_from: toskerlite.nodes.Software
 
 topology_template:
   node_templates:
     php:
-      type: evalto.nodes.Module
+      type: toskerlite.nodes.Module
       requirements:
         - host: httpd
     gui:
-      type: evalto.nodes.Php_app
+      type: toskerlite.nodes.Php_app
       requirements:
         - host: httpd
         - dependency: rest_api
     maven:
-      type: evalto.nodes.Module
+      type: toskerlite.nodes.Module
       requirements:
         - host: java
     rest_api:
-      type: evalto.nodes.Java_app
+      type: toskerlite.nodes.Java_app
       requirements:
         - host: java
         - connection: database
     database:
-      type: evalto.nodes.No_sql_db
+      type: toskerlite.nodes.No_sql_db
       requirements:
         - host: mongo
     httpd:
-      type: evalto.nodes.Container
+      type: toskerlite.nodes.Container
       requirements:
         - host: front_vm
     java:
-      type: evalto.nodes.Container
+      type: toskerlite.nodes.Container
       requirements:
         - host: back_vm
     mongo:
-      type: evalto.nodes.Container
+      type: toskerlite.nodes.Container
       requirements:
         - host: back_vm
         - storage: storage
     storage:
-      type: evalto.nodes.Volume
+      type: toskerlite.nodes.Volume
       requirements:
         - host: back_vm
     front_vm:
-      type: evalto.nodes.VM
+      type: toskerlite.nodes.VM
     back_vm:
-      type: evalto.nodes.VM
+      type: toskerlite.nodes.VM

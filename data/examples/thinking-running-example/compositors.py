@@ -55,11 +55,11 @@ def sumOfferings(offerings,total):
     return newTotal
 
 compositors = {
-    "evaltoNodesContainer": {
+    "toskerliteNodesContainer": {
         "h": pairwiseSum,
         "v": pairwiseSum
     },
-    "evaltoNodesVM": {
+    "toskerliteNodesVM": {
         "h": pairwiseSum,
         "v": compatibleOfferings
     },
