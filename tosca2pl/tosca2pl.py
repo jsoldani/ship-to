@@ -27,7 +27,7 @@ def parse(inputFile,outputFile):
     for n in app.nodetemplates:
         # get current node - represented as [name, type]
         node = []
-        nodeName = n.name
+        nodeName = n.name.replace("-","_")
         node.append(nodeName)
         nodeTypeTokens = n.type.split(".")
         nodeType = nodeTypeTokens[0]
