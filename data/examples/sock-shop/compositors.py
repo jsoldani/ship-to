@@ -55,7 +55,18 @@ def sumOfferings(offerings,total):
     return newTotal
 
 compositors = {
-    # see "thinking-running-example"
+    "toskerliteNodesContainer": {
+        "h": pairwiseSum,
+        "v": pairwiseSum
+    },
+    "toskerliteNodesVM": {
+        "h": pairwiseSum,
+        "v": compatibleOfferings
+    },
+    "bottom": {
+        "h": minMaxOfferings,
+        "v": sumOfferings
+    }
 }
 
 def compositor(node,direction):
