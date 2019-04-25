@@ -8,8 +8,8 @@ def reduce(outputFile):
     # load Prolog program "reducer"
     prolog = Prolog()
     prolog.consult("prolog/reducer.pl")
-    # compute all possible, equivalent reductions
-    results = list(prolog.query("loop(R)"))
+    # compute first possible solution (if any)
+    results = list(prolog.query("loop(R)", maxresult=1))
     if len(results) > 0:
         # if solvable, save first result
         result = results[0]["R"]
