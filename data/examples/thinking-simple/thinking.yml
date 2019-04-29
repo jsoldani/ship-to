@@ -114,7 +114,7 @@ node_types:
         relationship: tosca.relationships.DependsOn
     - host:
         capability: tosca.capabilities.Container
-        occurrences: 1
+        occurrences: [1,1]
         node: tosker.nodes.Container
         relationship: tosca.relationships.HostedOn
     capabilities:
