@@ -1,0 +1,31 @@
+tosca_definitions_version: tosca_simple_yaml_1_0
+
+node_types:
+  # my own type system
+  myTypes.nodes.Root:
+    derived_from: tosca.nodes.Root
+  myTypes.nodes.VM:
+    derived_from: myTypes.nodes.Root
+    capabilities:
+      host:
+        type: tosca.capabilities.Container
+        valid_source_types: [myTypes.nodes.Root]
+        occurrences: [0, UNBOUNDED]
+  myTypes.nodes.Software:
+    derived_from: toskerlite.nodes.Root
+    requirements:
+    - host:
+        capability: tosca.capabilities.Container
+        occurrences: 1
+        node: myTypes.nodes.VM
+        relationship: tosca.relationships.HostedOn
+
+topology_template:
+  # topology containing 2 nodes, "app" and "vm", with "app" hosted on "vm"
+  node_templates:
+    app:
+      type: myTypes.nodes.Software
+      requirements:
+        - host: vm
+    vm:
+      type: myTypes.nodes.VM
