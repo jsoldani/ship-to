@@ -56,29 +56,29 @@ costs = {
         "memory": 48.83, # RSS of running process
         "storage": 66.6 # disk usage of app folder
     },
-    "frontend_container": {
+    "front_cont": {
         "memory": 20.28, # docker stats
         "storage": 71 # size of node:10-alpine
     },
-    "frontend_vm": amazonT2Offerings + amazonT3Offerings + azureOfferings,
+    "front_vm": amazonT2Offerings + amazonT3Offerings + azureOfferings,
     "catalogue": {
         "memory": 6.65, # RSS of running process
         "storage": 13.6 # size of go compiled program
     },
-    "catalogue_container": {
+    "catal_cont": {
         "memory": 3.13, # docker stats
         "storage": 676 # size of golang:1.7
     },
-    "catalogue_db": {
+    "catal_db": {
         "memory": 120.9, # docker stats
         "storage": 400 # docker image size
     },
-    "catalogue_vm": amazonT2Offerings + amazonT3Offerings + azureOfferings,
+    "catal_vm": amazonT2Offerings + amazonT3Offerings + azureOfferings,
     "orders": {
         "memory": 254.88, # RSS of running process
         "storage": 24.7 # jar size
     },
-    "orders_container": {
+    "orders_cont": {
         "memory": 2.82, # docker stats
         "storage": 57 # size of weaveworksdemos/msd-java:jre-latest
     },
@@ -91,7 +91,7 @@ costs = {
         "memory": 7.95, # RSS of running process
         "storage": 14.1 # size of go compiled program
     },
-    "users_container": {
+    "users_cont": {
         "memory": 3.38, # docker stats
         "storage": 241 # size of golang:1.7-alpine
     },
@@ -104,7 +104,7 @@ costs = {
         "memory": 255.85, # RSS of running process
         "storage": 24.6 # jar size
     },
-    "carts_container": {
+    "carts_cont": {
         "memory": 1.65, # docker stats
         "storage": 57 # size of weaveworksdemos/msd-java:jre-latest
     },
@@ -122,7 +122,7 @@ costs = {
         "memory": 248.05, # RSS of running process
         "storage": 25.1 # jar size
     },
-    "shipping_container": {
+    "ship_cont": {
         "memory": 1.75, # docker stats
         "storage": 57 # weaveworksdemos/msd-java:jre-latest
     },
@@ -130,11 +130,11 @@ costs = {
         "memory": 33.21, # docker stats
         "storage": 179 # size of rabbitmq:3.6.8
     },
-    "queue_master": {
+    "q_master": {
         "memory": 139.2, # docker stats
         "storage": 179 # docker image size
     },
-    "shipping_vm": amazonT2Offerings + amazonT3Offerings + azureOfferings,
+    "ship_vm": amazonT2Offerings + amazonT3Offerings + azureOfferings,
     "bottom": {
         "min": 0.0,
         "max": 0.0

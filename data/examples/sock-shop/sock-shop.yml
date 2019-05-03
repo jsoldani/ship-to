@@ -105,47 +105,47 @@ topology_template:
     edge_router:
       type: toskerlite.nodes.Container
       requirements:
-        - host: frontend_vm
+        - host: front_vm
         - connection: frontend
     frontend:
       type: toskerlite.nodes.Software
       requirements:
-        - host: frontend_container
+        - host: front_cont
         - connection: catalogue
         - connection: orders
         - connection: users
         - connection: carts
         - connection: payment
         - connection: shipping
-    frontend_container:
+    front_cont:
       type: toskerlite.nodes.Container
       requirements:
-        - host: frontend_vm
-    frontend_vm:
+        - host: front_vm
+    front_vm:
       type: toskerlite.nodes.VM
 
     # catalogue
     catalogue:
       type: toskerlite.nodes.Software
       requirements:
-        - host: catalogue_container
-        - connection: catalogue_db
-    catalogue_db:
+        - host: catal_cont
+        - connection: catal_db
+    catal_db:
       type: toskerlite.nodes.Container
       requirements:
-        - host: catalogue_vm
-    catalogue_container:
+        - host: catal_vm
+    catal_cont:
       type: toskerlite.nodes.Container
       requirements:
-        - host: catalogue_vm
-    catalogue_vm:
+        - host: catal_vm
+    catal_vm:
       type: toskerlite.nodes.VM
 
     # orders
     orders:
       type: toskerlite.nodes.Software
       requirements:
-        - host: orders_container
+        - host: orders_cont
         - connection: orders_db
         - connection: users
         - connection: carts
@@ -155,7 +155,7 @@ topology_template:
       type: toskerlite.nodes.Container
       requirements:
         - host: orders_vm
-    orders_container:
+    orders_cont:
       type: toskerlite.nodes.Container
       requirements:
         - host: orders_vm
@@ -166,13 +166,13 @@ topology_template:
     users:
       type: toskerlite.nodes.Software
       requirements:
-        - host: users_container
+        - host: users_cont
         - connection: users_db
     users_db:
       type: toskerlite.nodes.Container
       requirements:
         - host: users_vm
-    users_container:
+    users_cont:
       type: toskerlite.nodes.Container
       requirements:
         - host: users_vm
@@ -183,13 +183,13 @@ topology_template:
     carts:
       type: toskerlite.nodes.Software
       requirements:
-        - host: carts_container
+        - host: carts_cont
         - connection: carts_db
     carts_db:
       type: toskerlite.nodes.Container
       requirements:
         - host: carts_vm
-    carts_container:
+    carts_cont:
       type: toskerlite.nodes.Container
       requirements:
         - host: carts_vm
@@ -208,20 +208,20 @@ topology_template:
     shipping:
       type: toskerlite.nodes.Software
       requirements:
-        - host: shipping_container
+        - host: ship_cont
         - connection: rabbitmq
-    shipping_container:
+    ship_cont:
       type: toskerlite.nodes.Container
       requirements:
-        - host: shipping_vm
+        - host: ship_vm
     rabbitmq:
       type: toskerlite.nodes.Container
       requirements:
-        - host: shipping_vm
-    queue_master:
+        - host: ship_vm
+    q_master:
       type: toskerlite.nodes.Container
       requirements:
-        - host: shipping_vm
+        - host: ship_vm
         - connection: rabbitmq
-    shipping_vm:
+    ship_vm:
       type: toskerlite.nodes.VM
