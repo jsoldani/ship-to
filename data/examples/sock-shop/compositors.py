@@ -69,5 +69,5 @@ compositors = {
     }
 }
 
-def compositor(node,direction):
-    return compositors[node][direction]
+def compositor(sort,direction):
+    return compositors[sort][direction]
