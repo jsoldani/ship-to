@@ -2,15 +2,15 @@
 :- consult('../config/topology.pl').
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+violatingWellFormedness(L1, L2) :-
+    findall(edge(D,N1,N2), edge(D,N1,N2), Edges),
+    findall(X, ( member(edge(h,X,X),Edges); path(v,X,X,Edges) ), L1), % cond (i) of well-formedness
+    findall(X, ( member(edge(v,X,Y),Edges), member(edge(v,X,Z),Edges), Y\==Z ), L2). % cond (ii) of well-formedness
+
 loop(Result) :-
     findall(node(N,T,C), node(N,T,C), Nodes),
     findall(edge(D,N1,N2), edge(D,N1,N2), Edges),
-    wellFormedTopology(Edges),
     loop(Nodes,Edges,Result).
-
-wellFormedTopology(Edges) :-
-    findall(X, ( member(edge(h,X,X),Edges); path(v,X,X,Edges) ), []),  %def 3.(i)
-    findall(X, ( member(edge(v,X,Y),Edges), member(edge(v,X,Z),Edges), Y\==Z ), []). %def 3.(ii)
 
 loop([node(_,_,Nc)],[],Nc).
 loop([Node1,Node2|Nodes],Edges,Result) :-
