@@ -25,7 +25,7 @@ collapse(Nodes,Edges,NewNodes,NewEdges) :-
 reducible(U,V,v,_,Edges) :-
     member(edge(v,U,V),Edges),
     \+ member(edge(v,_,U),Edges),
-    findall(X, (path(v,X,V,Edges),(path(h,U,X,Edges);path(h,X,U,Edges))), []).
+    findall(X, (path(v,X,V,Edges),(member(edge(h,U,X),Edges);member(edge(h,X,U),Edges))), []).
 
 reducible(U,V,h,Z,Edges) :-
     member(edge(h,U,V),Edges),
