@@ -33,12 +33,6 @@ def main(args):
     os.chdir("../evaluator")
     os.system("python loader.py " + compositorsFile + " " + costsFile)
     os.system("python evaluator.py " + termTxt + " result.txt")
-    resultTxt = os.getcwd() + "/output/result.txt"
     print("done!")
-
-    # print result
-    resultFile = open(resultTxt)
-    print(resultFile.read())
-    resultFile.close()
 
 main(sys.argv[1:])
