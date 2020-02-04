@@ -22,8 +22,7 @@ def main(args):
 
     # print result
     print("** Identified feasible application deployments **")
-	resultTxt = os.getcwd() + "/output/result.txt"
-    
-	# TODO printout results
+	resultTxt = os.getcwd() + "evalto/output/result.txt"
+    print(resultTxt)
 
 main(sys.argv[1:])
