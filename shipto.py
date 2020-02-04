@@ -10,12 +10,12 @@ def main(args):
     costsFile = os.path.abspath(args[1])
     edgeNodesFile = os.path.abspath(args[2])
 
-	# configuring desired evalto instance
+    # configuring desired evalto instance
     print("Configuring solver...", end="")
     # TODO implement environment configuration
     print("done!")
 
-	# launching evalto topology from TOSCA to prolog
+    # launching evalto topology from TOSCA to prolog
     print("Finding feasible application deployments...", end="")
     out = os.system("python evalto\evalto.py " + toscaFile + " " + costsFile + " " + edgeNodesFile)
     print("done!")
