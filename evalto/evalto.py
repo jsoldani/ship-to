@@ -1,4 +1,5 @@
 import os
+import shutil
 import sys
 
 def main(args):
@@ -35,7 +36,9 @@ def main(args):
     os.system("python evaluator.py " + termTxt + " result.txt")
     print("done!")
 
-	# restoring working dir
-	os.chdir("..")
+	# copying output and restoring working dir
+    os.chdir("..")
+    shutil.copy("./evaluator/output/result.txt","output.txt")
+    os.chdir("..")
 
 main(sys.argv[1:])
