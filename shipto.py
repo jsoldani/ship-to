@@ -22,6 +22,8 @@ def main(args):
 
     # print result
     print("** Identified feasible application deployments **")
+	resultTxt = os.getcwd() + "/output/result.txt"
+    
 	# TODO printout results
 
 main(sys.argv[1:])

@@ -35,4 +35,7 @@ def main(args):
     os.system("python evaluator.py " + termTxt + " result.txt")
     print("done!")
 
+	# restoring working dir
+	os.chdir("..")
+
 main(sys.argv[1:])
