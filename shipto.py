@@ -12,11 +12,13 @@ def main(args):
 
     # configuring desired evalto instance
     print("Configuring solver...", end="")
-    # TODO implement environment configuration
+    # TODO generate needed python objects from costsFile and edgeNodesFile
+    # TODO prepare examples, destroy "evalto" ones
     print("done!")
 
     # launching evalto topology from TOSCA to prolog
     print("Finding feasible application deployments...", end="")
+    # TODO pass generated python objects to evalto
     out = os.system("python evalto\evalto.py " + toscaFile + " " + costsFile + " " + edgeNodesFile)
     print("done!")
 
