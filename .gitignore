@@ -3,4 +3,4 @@
 evalto/evaluator/config/*
 evalto/parser/*.pl
 evalto/reducer/config/*
-vs/*
+.vs/*
