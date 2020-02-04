@@ -20,9 +20,11 @@ def main(args):
     out = os.system("python evalto\evalto.py " + toscaFile + " " + costsFile + " " + edgeNodesFile)
     print("done!")
 
-    # print result
+    # printing results
     print("** Identified feasible application deployments **")
-	resultTxt = os.getcwd() + "evalto/output/result.txt"
-    print(resultTxt)
+    resultTxt = os.getcwd() + "/evalto/output.txt"
+    resultFile = open(resultTxt)
+    print(resultFile.read())
+    resultFile.close()
 
 main(sys.argv[1:])
