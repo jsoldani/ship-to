@@ -10,6 +10,9 @@ def main(args):
     compositorsFile = os.path.abspath(args[1])
     costsFile = os.path.abspath(args[2])
 
+	# setting running dir to "evalto" dir
+    os.chdir("evalto")
+
     # translate topology from TOSCA to prolog
     print("Parsing TOSCA file...", end="")
     os.chdir("tosca2pl")
