@@ -1,5 +1,6 @@
 */__pycache__/*
 */output/*
+*/output.txt
 evalto/evaluator/config/*
 evalto/parser/*.pl
 evalto/reducer/config/*
