@@ -19,7 +19,7 @@ def main(args):
     # launching evalto topology from TOSCA to prolog
     print("Finding feasible application deployments...", end="")
     # TODO pass generated python objects to evalto
-    out = os.system("python evalto\evalto.py " + toscaFile + " " + costsFile + " " + edgeNodesFile)
+    out = os.system("python evalto/evalto.py " + toscaFile + " " + costsFile + " " + edgeNodesFile)
     print("done!")
 
     # printing results
