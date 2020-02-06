@@ -30,7 +30,6 @@ def generateCosts(tosca, deploymentInfo):
         else:
             costs[nodeName] = deploymentInfo["consumption"][nodeName]
 
-    print(costs)
     # returning generated costs
     return costs
 

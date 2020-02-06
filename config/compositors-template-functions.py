@@ -22,5 +22,4 @@ def sum_consumptions(consumption1,consumption2):
     sum = {}
     for key in consumption1:
         sum[key] = consumption1[key] + consumption2[key]
-        print(consumption1[key], " + ", consumption2[key], " = ", sum[key])
     return sum

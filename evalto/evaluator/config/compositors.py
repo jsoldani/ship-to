@@ -22,7 +22,6 @@ def sum_consumptions(consumption1,consumption2):
     sum = {}
     for key in consumption1:
         sum[key] = consumption1[key] + consumption2[key]
-        print(consumption1[key], " + ", consumption2[key], " = ", sum[key])
     return sum
 compositors = {  'bottom': { 'h': union_placements, 'v': union_placements},  'shiptonodescompute': { 'h': sum_consumptions, 'v': update_placement},  'shiptonodescontainer': { 'h': sum_consumptions, 'v': sum_consumptions},  'shiptonodessoftware': { 'h': sum_consumptions, 'v': sum_consumptions},  'shiptonodeswebapplication': { 'h': sum_consumptions, 'v': sum_consumptions},  'shiptonodesvolume': { 'h': sum_consumptions, 'v': sum_consumptions},  'shiptonodesdatabase': { 'h': sum_consumptions, 'v': sum_consumptions},  }
 def compositor(sort,direction):

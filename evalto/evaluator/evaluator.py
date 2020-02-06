@@ -104,7 +104,6 @@ def main(args):
     try:
         totalCost = eval(inputFile)
     except TypeError as e:
-        print(e)
         print("ERROR: inconsistent problem!")
         exit(2)
 
