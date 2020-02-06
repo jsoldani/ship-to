@@ -1,4 +1,5 @@
 import errno
+import json
 import os
 import sys
 from config.costs import cost
@@ -117,7 +118,7 @@ def main(args):
     # output term on "outputFile"
     outputFileWithFolder = "output/" + outputFile
     output = open(outputFileWithFolder,"w")
-    output.write(str(totalCost))
+    json.dump(totalCost, output)
 
 # run main function
 main(sys.argv[1:])

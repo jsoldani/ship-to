@@ -132,8 +132,8 @@ def main(args):
     print("** Identified feasible application deployments **")
     resultTxt = os.getcwd() + "/evalto/output.txt"
     resultFile = open(resultTxt)
-    output = resultFile.read()
-    print(output[0])
+    output = json.load(resultFile)
+    print(output)
     resultFile.close()
 
 main(sys.argv[1:])
