@@ -128,12 +128,22 @@ def main(args):
     # launching evalto topology from TOSCA to prolog
     out = os.system("python evalto/evalto.py " + toscaFile + " " + compsFilePath + " " + costsFilePath)
 
-    # printing results
-    print("** Identified feasible application deployments **")
+    # reading results
     resultTxt = os.getcwd() + "/evalto/output.txt"
     resultFile = open(resultTxt)
     output = json.load(resultFile)
-    print(output)
     resultFile.close()
+
+    # creating output YAML file
+    outputYml = open("placement.yml", "w")
+    shapedOutput = {}
+    for placement in output:
+        computeNode = placement["name"]
+        shapedOutput[computeNode] = {}
+        shapedOutput[computeNode]["required_memory"] = placement["memory"]
+        shapedOutput[computeNode]["required_storage"] = placement["storage"]
+        shapedOutput[computeNode]["feasible_deployments"] = placement["clusterNodes"]
+    yaml.dump(shapedOutput,outputYml)
+    print("--> Results placed in 'placement.yml'")
 
 main(sys.argv[1:])

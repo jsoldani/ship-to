@@ -9,3 +9,4 @@ evalto/evaluator/output/*
 evalto/parser/*.pl
 evalto/reducer/config/*
 .vs/*
+placement.yml
