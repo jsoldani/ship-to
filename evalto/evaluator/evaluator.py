@@ -78,7 +78,7 @@ def evalTerm(term):
         node = term[2:]
         return cost(node)
     else:
-        comp = compositor(term["type"],term["dir"])
+        comp = compositor(term["type"].lower(),term["dir"])
         costTerm1 = evalTerm(term["term1"])
         costTerm2 = evalTerm(term["term2"])
         return comp(costTerm1,costTerm2)
@@ -104,9 +104,10 @@ def main(args):
     try:
         totalCost = eval(inputFile)
     except TypeError as e:
+        print(e)
         print("ERROR: inconsistent problem!")
         exit(2)
-        
+
     # create "output" folder (if not existing yet)
     try:
         os.mkdir("output")
