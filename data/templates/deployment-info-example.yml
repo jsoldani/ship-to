@@ -1,0 +1,15 @@
+clusterNodes:
+  n1:
+    memory: 256
+    storage: 256
+  n2:
+    memory: 256
+    storage: 512
+
+consumption:
+  app:
+    memory: 12.7
+    storage: 54.2
+  server:
+    memory: 45.2
+    storage: 77.1

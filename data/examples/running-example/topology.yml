@@ -1,0 +1,167 @@
+tosca_definitions_version: tosca_simple_yaml_1_0
+
+description: >
+  Example of TOSCA application specification
+
+node_types:
+  shipto.nodes.Root:
+    derived_from: tosca.nodes.Root
+
+  shipto.nodes.Compute:
+    derived_from: shipto.nodes.Root
+    capabilities:
+      host:
+        type: tosca.capabilities.Container
+        valid_source_types: [shipto.nodes.Root]
+        occurrences: [0, UNBOUNDED]
+
+  shipto.nodes.Container:
+    derived_from: shipto.nodes.Root
+    requirements:
+    - host:
+        capability: tosca.capabilities.Container
+        occurrences: [0, UNBOUNDED]
+        node: shipto.nodes.Compute
+        relationship: tosca.relationships.HostedOn
+    - storage:
+        capability: tosca.capabilities.Attachment
+        occurrences: [0, UNBOUNDED]
+        node: shipto.nodes.Volume
+        relationship: tosca.relationships.AttachesTo
+    - connection:
+        capability: tosca.capabilities.Endpoint
+        occurrences: [0, UNBOUNDED]
+        node: shipto.nodes.Root
+        relationship: tosca.relationships.ConnectsTo
+    - dependency:
+        capability: tosca.capabilities.Node
+        occurrences: [0, UNBOUNDED]
+        node: shipto.nodes.Root
+        relationship: tosca.relationships.DependsOn
+    capabilities:
+      host:
+        type: tosca.capabilities.Container
+        valid_source_types: [shipto.nodes.Software]
+        occurrences: [0, UNBOUNDED]
+      endpoint:
+        type: tosca.capabilities.Endpoint
+        valid_source_types: [shipto.nodes.Software, shipto.nodes.Container]
+        occurrences: [0, UNBOUNDED]
+      feature:
+        type: tosca.capabilities.Node
+        valid_source_types: [shipto.nodes.Software, shipto.nodes.Container]
+        occurrences: [0, UNBOUNDED]
+
+  shipto.nodes.Database:
+    derived_from: shipto.nodes.Root
+    requirements:
+      - host:
+          capability: tosca.capabilities.Container
+          occurrences: [0, UNBOUNDED]
+          node: shipto.nodes.Container
+          relationship: tosca.relationships.HostedOn
+    capabilities:
+      endpoint:
+        type: tosca.capabilities.Endpoint
+        valid_source_types: [shipto.nodes.Software, shipto.nodes.Container]
+        occurrences: [0, UNBOUNDED]
+
+  shipto.nodes.Software:
+    derived_from: shipto.nodes.Root
+    requirements:
+      - host:
+          capability: tosca.capabilities.Container
+          occurrences: [0, UNBOUNDED]
+          node: shipto.nodes.Container
+          relationship: tosca.relationships.HostedOn
+
+  shipto.nodes.WebApplication:
+    derived_from: shipto.nodes.Root
+    requirements:
+      - host:
+          capability: tosca.capabilities.Container
+          occurrences: [0, UNBOUNDED]
+          node: shipto.nodes.Container
+          relationship: tosca.relationships.HostedOn
+      - connection:
+          capability: tosca.capabilities.Endpoint
+          occurrences: [0, UNBOUNDED]
+          node: shipto.nodes.Root
+          relationship: tosca.relationships.ConnectsTo
+    capabilities:
+        endpoint:
+          type: tosca.capabilities.Endpoint
+          valid_source_types: [shipto.nodes.Software, shipto.nodes.Container]
+          occurrences: [0, UNBOUNDED]
+
+  shipto.nodes.Volume:
+    derived_from: shipto.nodes.Root
+    capabilities:
+      attachment:
+        type: tosca.capabilities.Attachment
+        valid_source_types: [evalto.nodes.Container]
+        occurrences: [0, UNBOUNDED]
+    requirements:
+      - host:
+          capability: tosca.capabilities.Container
+          occurrences: 1
+          node: shipto.nodes.Container
+          relationship: tosca.relationships.HostedOn
+
+
+topology_template:
+  node_templates:
+    # f-node stack
+    f_node:
+      type: shipto.nodes.Compute
+    heartbeat_f:
+      type: shipto.nodes.Container
+      requirements:
+        - host: f_node
+    tomcat:
+      type: shipto.nodes.Container
+      requirements:
+        - host: f_node
+    php_module:
+      type: shipto.nodes.Software
+      requirements:
+        - host: tomcat
+    web_gui:
+      type: shipto.nodes.WebApplication
+      requirements:
+        - host: tomcat
+        - connection: web_api
+
+    # b-node stack
+    b_node:
+      type: shipto.nodes.Compute
+    heartbeat_b:
+      type: shipto.nodes.Container
+      requirements:
+        - host: b_node
+    java:
+      type: shipto.nodes.Container
+      requirements:
+        - host: b_node
+    mongo:
+      type: shipto.nodes.Container
+      requirements:
+        - host: b_node
+        - storage: volume
+    volume:
+      type: shipto.nodes.Volume
+      requirements:
+        - host: b_node
+    maven:
+      type: shipto.nodes.Software
+      requirements:
+        - host: java
+    web_api:
+      type: shipto.nodes.WebApplication
+      requirements:
+        - host: java
+        - connection: db
+    db:
+      type: shipto.nodes.Database
+      requirements:
+        - host: mongo
