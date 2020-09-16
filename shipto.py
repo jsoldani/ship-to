@@ -26,6 +26,6 @@ def main(args):
     evaltoOutput = os.getcwd() + "/evalto/output.txt"
     targetYaml = "placement.yml"
     out = os.system("python exporter/exporter.py " + evaltoOutput + " " + targetYaml)
-    print("|\n|--> Results placed in ", targetYaml)
+    print("|\n|--> Please find obtained results in", targetYaml)
 
 main(sys.argv[1:])
